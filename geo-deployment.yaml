@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geo
+  labels:
+    app: geo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: geo
+  template:
+    metadata:
+      labels:
+        app: geo
+    spec:
+      containers:
+      - name: geo-complete
+        image: thkoenia/wahlprojekt:05
+        ports:
+        - containerPort: 3000
