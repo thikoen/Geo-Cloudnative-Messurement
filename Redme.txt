@@ -1,0 +1,8 @@
+This project is under construction.
+
+Timeline:
+
+Basic Setup: Jenkins CI -> k8s ind Azure AKS -> Run Geo App Pod -> Configure Services and Ingress 
+Messurement Setup: In Aks: Run and configure Grafana, InfluxDB, JMeter -> Build JMeter Testset -> Visualize with Grafana and Influx
+
+I am aiming for as much IaaC as possible. 
