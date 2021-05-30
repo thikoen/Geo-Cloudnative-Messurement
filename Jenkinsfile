@@ -3,22 +3,22 @@ pipeline {
     stages {
         stage('Retrieve image from registry') {
             steps {
-                
+                echo 'Retrieve image from registry'
             }
         }
         stage('Deploy image into Kubernetes cluster') {
             steps {
-                
+                echo 'Deploy image into Kubernetes cluster'
             }
         }
         stage('Run start scripts for app') {
             steps {
-                
+                echo 'Deploy image into Kubernetes cluster'
             }
         }
         stage('Run performance tests') {
             steps {
-                
+                echo 'Deploy image into Kubernetes cluster'
             }
         }
     }
