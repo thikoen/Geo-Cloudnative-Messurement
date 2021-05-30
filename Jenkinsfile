@@ -16,25 +16,29 @@ pipeline {
 
 
     stages {
-        stage('Retrieve image from registry') {
-            steps {
-                if(${params.Mode} != 'Test'){
-                    echo 'Retrieve image from registry'
-                    sh 'kubectl apply -f geo-deployment.yaml'
-                }
-                
-            }
-        }
-
         stage('Deploy image into Kubernetes cluster') {
-            steps {
-                echo 'Deploy image into Kubernetes cluster'
+           steps {
+               script {
+                   if(${params.Mode} != 'Test'){
+                       echo 'Retrieve image from registry'
+                       sh 'kubectl apply -f geo-deployment.yaml'
+                   }
+               }
+                
             }
         }
 
         stage('Run start scripts for app') {
             steps {
-                echo 'Deploy image into Kubernetes cluster'
+                script {
+                    String currentPod = sh (
+                                            script: 'kubectl get pods -o=name |  sed "s/^.\{4\}//" ',
+                                            returnStdout: true
+                                            ).trim()
+                    echo 'Injecting test data in app'
+                    sh 'kubectl exec' + ${currentPod} + '-- npm run seed'
+                    sh 'kubectl exec' + ${currentPod} + '-- npm start'
+                }
             }
         }
 
@@ -44,10 +48,11 @@ pipeline {
             }
         }
     }
-     post { 
+     post {
+        /* 
         always { 
             echo 'Jenkins finished'
-            deleteDir() /* clean up the workspace */
+            deleteDir()
         }
          success {
             echo 'Build succeeded'
@@ -65,5 +70,6 @@ pipeline {
              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
         }
+        */
     }
 }
