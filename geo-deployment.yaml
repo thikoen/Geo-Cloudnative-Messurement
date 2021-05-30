@@ -19,5 +19,9 @@ spec:
         image: thkoenia/wahlprojekt:05
         ports:
         - containerPort: 3000
-        command: ["/bin/sh"]
-        args: ["npm run seed && npm start"]
+        command:
+        - /bin/sh
+        - -c
+        - | 
+          npm run seed
+          npm run start
