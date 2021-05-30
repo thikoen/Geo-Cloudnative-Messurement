@@ -48,8 +48,9 @@ pipeline {
             }
         }
     }
+   /* 
      post {
-        /* 
+        
         always { 
             echo 'Jenkins finished'
             deleteDir()
@@ -70,6 +71,8 @@ pipeline {
              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
         }
-        */
+        
     }
+    
+    */
 }
