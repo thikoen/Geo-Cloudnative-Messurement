@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     String currentPod = sh (
-                                            script: 'kubectl get pods -o=name |  sed "s/^.\{4\}//" ',
+                                            script: 'kubectl get pods -o=name',
                                             returnStdout: true
                                             ).trim()
                     echo 'Injecting test data in app'
