@@ -13,6 +13,7 @@ pipeline {
 
 
     stages {
+       /*
         stage('Deploy image into Kubernetes cluster') {
            steps {
                script {
@@ -24,6 +25,7 @@ pipeline {
                 
             }
         }
+        */
 
         stage('Run start scripts for app') {
             steps {
