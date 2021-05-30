@@ -1,10 +1,7 @@
 pipeline {
    
-    agent {
-        kubernetes {
-            yamlFile 'geo-deployment.yaml'
-        }
-    }
+    agent any
+ 
     
     parameters {
         choice(name: 'Mode', choices: ['Deploy + Test', 'Deploy', 'Test'], description: 'Deploys current Version and tests den Performance or just deploys or tests it.')
