@@ -1,21 +1,43 @@
 pipeline {
-    agent any
+   
+    agent {
+        kubernetes {
+            yamlFile 'geo-deployment.yaml'
+        }
+    }
+    
+    parameters {
+        choice(name: 'Mode', choices: ['Deploy + Test', 'Deploy', 'Test'], description: 'Deploys current Version and tests den Performance or just deploys or tests it.')
+    }
+
+    environment {       
+        registry = "thkoenia/wahlprojekt:05"   
+    }
+
+
     stages {
         stage('Retrieve image from registry') {
             steps {
-                echo 'Retrieve image from registry'
+                if(${params.Mode} != 'Test'){
+                    echo 'Retrieve image from registry'
+                    sh 'kubectl apply -f geo-deployment.yaml'
+                }
+                
             }
         }
+
         stage('Deploy image into Kubernetes cluster') {
             steps {
                 echo 'Deploy image into Kubernetes cluster'
             }
         }
+
         stage('Run start scripts for app') {
             steps {
                 echo 'Deploy image into Kubernetes cluster'
             }
         }
+
         stage('Run performance tests') {
             steps {
                 echo 'Deploy image into Kubernetes cluster'
