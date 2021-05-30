@@ -26,7 +26,7 @@ pipeline {
             }
         }
         
-
+/*
         stage('Run start scripts for app') {
             steps {
                 script {
@@ -37,7 +37,7 @@ pipeline {
                    
                 }
             }
-        }
+        }*/
 
         stage('Run performance tests') {
             steps {
