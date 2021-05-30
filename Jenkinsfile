@@ -17,7 +17,7 @@ pipeline {
         stage('Deploy image into Kubernetes cluster') {
            steps {
                script {
-                   if($Mode != 'Test'){
+                   if(params.Mode != 'Test'){
                        echo 'Retrieve image from registry'
                        sh "sudo kubectl apply -f geo-deployment.yaml"
                    }
