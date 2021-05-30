@@ -32,8 +32,8 @@ pipeline {
                 script {
                    String currentPod = sh(script: 'sudo kubectl get pods -o=name', returnStdout: true).trim()
                    sh "echo Injecting test data in $currentPod"
-                   //sh 'kubectl exec' + ${currentPod} + '-- npm run seed'
-                   sh "kubectl exec $currentPod -- npm start"
+                   sh "sudo kubectl exec $currentPod -- npm run seed"
+                   sh "sudo kubectl exec $currentPod -- npm start"
                    
                 }
             }
