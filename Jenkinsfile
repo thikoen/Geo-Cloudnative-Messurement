@@ -1,16 +1,16 @@
 pipeline {
    
     agent any
- 
     
     parameters {
         choice(name: 'Mode', choices: ['Deploy + Test', 'Deploy', 'Test'], description: 'Deploys current Version and tests den Performance or just deploys or tests it.')
     }
 
+   /*
     environment {       
         registry = "thkoenia/wahlprojekt:05"   
     }
-
+   */
 
     stages {
        /*
@@ -30,10 +30,7 @@ pipeline {
         stage('Run start scripts for app') {
             steps {
                 script {
-                    String currentPod = sh (
-                                            script: 'kubectl get pods -o=name',
-                                            returnStdout: true
-                                            ).trim()
+                    String currentPod = sh(script: 'kubectl get pods -o=name', returnStdout: true).trim()
                     echo 'Injecting test data in app'
                     sh 'kubectl exec' + ${currentPod} + '-- npm run seed'
                     sh 'kubectl exec' + ${currentPod} + '-- npm start'
