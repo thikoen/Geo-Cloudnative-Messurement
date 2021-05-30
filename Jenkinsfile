@@ -13,27 +13,27 @@ pipeline {
    */
 
     stages {
-       /*
+       
         stage('Deploy image into Kubernetes cluster') {
            steps {
                script {
                    if(${params.Mode} != 'Test'){
                        echo 'Retrieve image from registry'
-                       sh 'sudo kubectl apply -f geo-deployment.yaml'
+                       sh "sudo kubectl apply -f geo-deployment.yaml"
                    }
                }
                 
             }
         }
-        */
+        
 
         stage('Run start scripts for app') {
             steps {
                 script {
-                   String currentPod = sh(script: 'sudo kubectl get pods -o=name', returnStdout: true).trim()
-                   sh "echo Injecting test data in $currentPod"
-                   sh "sudo kubectl exec -t $currentPod -- npm run seed"
-                   sh "sudo kubectl exec -t $currentPod -- npm start"
+                  // String currentPod = sh(script: 'sudo kubectl get pods -o=name', returnStdout: true).trim()
+                  // sh "echo Injecting test data in $currentPod"
+                  // sh "sudo kubectl exec -t $currentPod -- npm run seed"
+                  // sh "sudo kubectl exec -t $currentPod -- npm start"
                    
                 }
             }
