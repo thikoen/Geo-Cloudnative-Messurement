@@ -24,4 +24,4 @@ spec:
         - -c
         - | 
           sleep 10
-          npm run seed && npm start
+          npm run seed
