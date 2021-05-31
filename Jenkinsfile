@@ -14,11 +14,11 @@ pipeline {
 
     stages {
        
-        stage('Deploy image into Kubernetes cluster') {
+        stage('Deploy app to Kubernetes') {
            steps {
                script {
                    if(params.Mode != 'Test'){
-                       echo 'Retrieve image from registry'
+                       echo ' ========= Start pod from deployment file ========= '
                        sh "sudo kubectl apply -f geo-deployment.yaml"
                    }
                }
@@ -30,18 +30,35 @@ pipeline {
             steps {
                 script {
                   String currentPod = sh(script: 'sudo kubectl get pods -o=name', returnStdout: true).trim()
-                  // sh "echo Injecting test data in $currentPod"
-                  // sh "sudo kubectl exec -t $currentPod -- npm run seed"
+                  sh " ========= echo Injecting test data in $currentPod ========= "
                   sh "sudo kubectl exec -t $currentPod -- npm start&"
                   sh "sudo kubectl exec -t $currentPod -- npm run seed&"
                   sh "exit"
                 }
             }
         }
-
+       
+        stage('Deploy performance tools to Kubernetes') {
+           steps {
+               script {
+                   if(params.Mode != 'Deploy'){
+                       echo ' ========= Start pods from deployment file ========= '
+                       sh "sudo kubectl apply -f jmeter-deployment.yaml"
+                       //sh "sudo kubectl apply -f grafana-deployment.yaml"
+                       //sh "sudo kubectl apply -f influx-deployment.yaml"
+                   }
+               }
+            }
+        }      
+       
         stage('Run performance tests') {
             steps {
-                echo 'Deploy image into Kubernetes cluster'
+               script {
+                  if(params.Mode != 'Deploy') {
+                     echo ' ========= Test whether the performance has changed significantly ========= '
+                     
+                  }
+               }
             }
         }
     }
