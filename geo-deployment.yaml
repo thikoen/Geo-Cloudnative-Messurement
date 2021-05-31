@@ -19,9 +19,3 @@ spec:
         image: thkoenia/wahlprojekt:05
         ports:
         - containerPort: 3000
-        command:
-        - /bin/sh
-        - -c
-        - | 
-          sleep 10
-          npm start
